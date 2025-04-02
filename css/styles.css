@@ -32,11 +32,18 @@ h1{
 
 canvas{
     position: absolute;
+    
     top: 0;
     left: 0;
-    scale: 0.5;
-    background-color: rgb(219, 219, 219);
-    border-radius: 15% 40% / 15% 40%;
-    border: rgb(248, 0, 0) ridge 20px;
+    scale: 0.7;
+    
+    border-radius: 10%;
+    border: rgb(248, 0, 0) ridge 12px;
+    transition: all 1s ease-in;
 
+}
+
+canvas:hover{
+    border-radius: 15% 40% / 15% 40%;
+    
 }

@@ -17,7 +17,14 @@ export function carScene(){
 // Crear el renderizador
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
-  document.body.appendChild(renderer.domElement);
+  const canvas = renderer.domElement;
+  canvas.style.width = '80%';
+  canvas.style.height = '70vh';
+  canvas.style.background = 'linear-gradient(0deg,rgb(0, 67, 143),rgb(204, 231, 255))'; 
+  
+
+
+  document.body.appendChild(canvas);
 
   // Agregar luces
   const ambientLight = new THREE.AmbientLight(0xffffff, 6);
@@ -27,7 +34,7 @@ export function carScene(){
   directionalLight.position.set(30, 150, -80);
   scene.add(directionalLight);
 
-  const directionalLightTwo = new THREE.DirectionalLight(0xffffff, 3);
+  const directionalLightTwo = new THREE.DirectionalLight(0xffffff, 4);
   directionalLightTwo.position.set(10, 200, 500); // Posición cercana a la cámara
   directionalLightTwo.target.position.set(10, 1, 0); // Apunta al coche
   scene.add(directionalLightTwo.target); // ¡No olvides esto!
@@ -72,14 +79,16 @@ const loadModel = (modelPath) => {
   }
 
   // 1. Crear el piso
-const floorGeometry = new THREE.CircleGeometry(200, 80);
+const floorGeometry = new THREE.CircleGeometry(300, 80);
 const floorMaterial = new THREE.MeshStandardMaterial({
 color: 0x281f1d ,
 side: THREE.DoubleSide,
 });
 
 const floor = new THREE.Mesh(floorGeometry, floorMaterial);
-floor.rotation.x = -Math.PI / 2;
+floor.rotation.x = Math.PI / 2;
+floor.position.set(0, 40, 10)
+
 scene.add(floor);
 
 
@@ -89,7 +98,8 @@ scene.add(floor);
   loader.load(modelPath, (gltf) => {
       car = gltf.scene;
       car.scale.set(0.5, 0.5, 0.5);
-      car.position.set(0, 0, 0);
+      car.position.set(0, 100, 100);
+      car.rotation.x = Math.PI / 8.5; // Rota 45° en el eje Y
       scene.add(car);
   },  undefined, (error) => {
       console.error('Error loading model:', error);
@@ -116,6 +126,7 @@ scene.add(floor);
       if (car) {
           car.rotation.y += rotationSpeed; // Rota en el eje Y (izquierda a derecha)
       }
+
       renderer.render(scene, camera);
   }
   animate();
